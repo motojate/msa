@@ -1,0 +1,20 @@
+터미널을 2개 연 후, kafka 폴더로 이동하고 아래의 명령어를 각각 실행. (주키퍼 먼저 켜준다.)
+./bin/zookeeper-server-start.sh config/zookeeper.properties 주키퍼 실행
+./bin/kafka-server-start.sh config/server.properties 카프카 실행
+
+(참고 사항. 굳이 안 해도 됨)
+./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties 주키퍼 백그라운드 실행
+./bin/kafka-server-start.sh -daemon config/server.properties 카프카 백그라운드 실행
+
+만약 서버가 둘 다 무사히 작동하면, 성공
+둘 중 하나라도 안 되면 셋팅 파일 편집.
+kafka 폴더 및 config 폴더에서
+주키퍼는 - zookeeper.properties 셋팅 변경 (2181 포트 충돌 외에는 아마 없을 것으로 예상)
+카프카는 - server.properties 셋팅 변경 (localhost 입력 시 maxi pc에서는 IPv6로 인식되어 ::9092 로 서버가 받아드리는 버그가 존재. 따라서 127.0.0.1로 설정.)
+
+초기 셋팅은 모두 완료 했는데, 용량 문제 혹은 포트 충돌같은 경우는 각 pc마다 고유의 셋팅을 가져야 함
+
+*** 만약 추후 카프카 브로커가 여러개가 필요할 경우, (즉 카프카 서버) 여러개의 셋팅 파일을 만든 후 각각 실행.
+
+
+--- 실행 흐름 > 주키퍼 -> 카프카 -> 각 msa 서버 실행
